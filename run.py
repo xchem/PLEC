@@ -1,5 +1,6 @@
 import argparse
 import os
+import subprocess
 
 parser = argparse.ArgumentParser()
 
@@ -19,9 +20,21 @@ target = args["target"]
 dirname = args["dir"]
 
 for struc in os.listdir(dirname):
-    lig = f'{dirname}/{struc}/{struc}.sdf'
+    print(struc)
+    lig = f'{dirname}/{struc}/{struc}_lig.pdb' ###hey
     prot = f'{dirname}/{struc}/{struc}.pdb'
-    os.system(f'bash get_PLEC.sh {lig} {prot} {target}')
+    # os.system(f'bash get_PLEC.sh {lig} {prot} {target}')
+    command = f'module load global/cluster && qsub ./get_PLEC.sh {lig} {prot} {target}'
+    subprocess.run(command,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    shell=True,
+                    executable='/bin/bash')
 
 
-os.system(f'python cluster.py -t {target}')
+command = f'module load global/cluster && qsub ./cluster.sh {target}'
+subprocess.run(command,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    shell=True,
+                    executable='/bin/bash')
