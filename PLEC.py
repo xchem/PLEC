@@ -40,7 +40,7 @@ ligand = next(oddt.toolkit.readfile('pdb', ligfile)) ###hey
 protein = next(oddt.toolkit.readfile('pdb', protfile))
 protein.protein = True
 info = {}
-PLEC = fingerprints.PLEC(ligand, protein, 1, 5, bits_info=info, size=65536, sparse=False, count_bits=True, distance_cutoff=6.0)
+PLEC = fingerprints.PLEC(ligand, protein, 1, 5, bits_info=info, size=65536, sparse=False, count_bits=True, distance_cutoff=4.5)
 
 bits = {}
 for i in info:
